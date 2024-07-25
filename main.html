@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Password Generator</title>
+</head>
+<body>
+    <center><h1>Random Password Generator</h1></center>
+    <center><h2 id="password">click generate button to get password!</h2></center>
+    <center><progress max="100", value="20", id="progressBar">20%</progress></center>
+    <center><button onclick="generatePassword()">Generate Password</button></center>
+    <center><button onclick="copyPassword">Copy Password</button></center>
+    <center><p>Change count of symbols here:</p></center>
+    <center><input type="number", id="count", value="8"></center>
+    <center><p id="likeDescription">Did you like it?</p></center>
+    <div class="buttonContainer">
+        <button id="yes", onclick="likeResult1">Yes</button>
+        <button id="no", onclick="likeResult2">No</button>
+    </div>
+    <center><p id="likeTv"></p></center>
+    <script>
+function generatePassword() {
+    try {
+        var length = parseInt(document.getElementById('count').value);
+        if (isNaN(length) || length < 1) {
+            throw new Error("count of symbols equals 0!");
+        }
+
+        var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+            password = "";
+        
+        for (var i = 0; i < length; i++) {
+            password += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
+        
+        document.getElementById("password").innerHTML = password;
+
+    } catch (error) {
+        var errDescription = "Error: " + error.message;
+        document.getElementById("password").innerHTML = errDescription;
+    }
+}
+
+function copyPassword() {
+    var passwordTv = document.getElementById("password");
+    passwordTv.select();
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();    
+}    
+    </script>
+    <script>
+        function likeResult1() {
+            document.getElementById("likeTv").innerText = "Thank you!";
+        }
+        function likeResult2() {
+        document.getElementById("likeTv").innerText = ":("    
+        }  
+    </script>
+    <style>
+        body {
+            background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(40,40,206,1) 35%, rgba(0,212,255,1) 100%);
+        }
+        
+        h1 {
+            color: white;
+        }
+        
+        h2 {
+            border: 5px solid white;
+            border-radius: 10px;
+            background: lightblue;
+        }
+        
+        button {
+              background: linear-gradient(to bottom right, blue, cyan);
+              width: 200px;
+              height: 50px;
+              color: white;
+              margin-top: 25px;
+              font-size: 15px;
+              border-radius: 10px;
+              border: 3px solid white;
+        }
+        
+        input {
+            width: 200px;
+            height: 20px;
+            margin-top: 5px;
+            border: 5px solid black;
+            border-radius: 15px;
+        }
+        
+        p {
+            color: white;
+        }
+        
+        progress {
+            width: 250px;
+            height: 30px;
+        }
+        
+        .buttonContainer {
+            display: flex;
+            gap: 10px;
+        }
+        
+        #yes {
+            background: green;
+        }
+        
+        #no {
+            background: red;
+        }
+        
+        #likeTv {
+            font-size: 30px;
+        }
+    </style>
+</body>
+</html>
